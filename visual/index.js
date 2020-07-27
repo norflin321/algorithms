@@ -1,4 +1,5 @@
 const drawUI = async () => {
+  document.getElementsByClassName("visual")[0].innerHTML = `<div class="stairs"></div><div class="buttons"></div>`;
   let arr = Array.from(new Array(50), i => i = Math.floor(Math.random() * (90 - 5) + 5));
   let stairs = document.getElementsByClassName("stairs")[0];
 
@@ -25,7 +26,7 @@ const bubbleSort = async e => {
   let buttons = document.getElementsByTagName("button");
 
   document.getElementsByClassName("buttons")[0].innerHTML = `<button style="width:100%" class="refresh">refresh</button>`;
-  document.getElementsByClassName("refresh")[0].onclick = e => document.location.reload(true);
+  document.getElementsByClassName("refresh")[0].onclick = e => drawUI();
 
   let speed = e.target.innerText;
   const timeout = () => {
