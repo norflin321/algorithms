@@ -1,3 +1,6 @@
+
+
+
 // Bubble Sort
 const bubbleSort = arr => {
   for (_ in arr) {
@@ -11,6 +14,9 @@ const bubbleSort = arr => {
   }
   return arr;
 }
+
+
+
 
 // Insertion Sort
 const insertSort = arr => {
@@ -29,7 +35,7 @@ const insertSort = arr => {
 
 // Merge Sort
 const mergeSort = arr => {
-  const conquer = (p1, p2) => {
+  const qonquer = (p1, p2) => {
     let sorted = [];
     let i = 0;
     let j = 0;
@@ -45,15 +51,17 @@ const mergeSort = arr => {
     return [...sorted, ...p1.slice(i), ...p2.slice(j)];
   }
   const divide = arr => {
-    if (arr.length <= 1) return arr;
+    if (arr.length <= 1) {
+      return arr;
+    }
     let mid = Math.floor(arr.length/2);
-    return conquer(divide(arr.slice(0, mid)), divide(arr.slice(mid)));
+    return qonquer(divide(arr.slice(0, mid)), divide(arr.slice(mid)));
   }
   return divide(arr);
 }
 
 // Tests
-const randomArr = () => Array.from(new Array(100), i => i = Math.floor(Math.random() * 100));
+const randomArr = () => Array.from(new Array(10000), i => i = Math.floor(Math.random() * 10000));
 
 console.time("insert");
 console.log(insertSort(randomArr()));
