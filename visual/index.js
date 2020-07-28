@@ -10,15 +10,15 @@ const drawUI = async () => {
     stairs.appendChild(stair);
     let height = arr[i] * 5;
     stair.style = `height: ${height}px`;
-    await new Promise(resolve => setTimeout(resolve, 5));
   }
 
   // draw buttons
   let buttonsWrap = document.getElementsByClassName("buttons-wrap")[0];
-  let sorts = ["bubble sort", "insert sort"];
+  let sorts = ["bubble sort", "insert sort", "merge sort"];
   for (sort of sorts) {
     let buttonWrap = document.createElement("div");
     let button = document.createElement("button");
+    button.style.width = "180px";
     button.innerText = sort;
     button.onclick = e => chooseSpeed(e);
     buttonWrap.appendChild(button);
@@ -50,9 +50,9 @@ const runSort = async (e, sortName) => {
 
   let speed = e.target.innerText;
   const timeout = () => {
-    let time = 5000;
+    let time = 0;
     if (speed == "slow") {
-      time = 300;
+      time = 1000;
     } else if (speed == "medium") {
       time = 50;
     } else {
@@ -66,8 +66,10 @@ const runSort = async (e, sortName) => {
 
   if (sortName == "bubble sort") {
     await bubbleSort(stairs, arr, timeout);
-  } else if (sortName = "insert sort") {
+  } else if (sortName == "insert sort") {
     await insertSort(stairs, arr, timeout);
+  } else if (sortName == "merge sort") {
+    await mergeSort(stairs, arr, timeout);
   }
 }
 
@@ -76,13 +78,24 @@ const insertSort = async (stairs, arr, timeout) => {
   let key;
   for (let i = 1; i < arr.length; i++) {
     key = arr[i];
+    key.style.backgroundColor = "#e91e63";
     let j = i - 1;
-    while(j >= 0 && arr[j].offsetHeight > key.offsetHeight) {
+    await timeout();
+    while(j >= 0) {
+      arr[j].style.backgroundColor = "#2196f3";
       await timeout();
-      stairs.insertBefore(arr[j+1], arr[j])
-      j--;
+      if (arr[j].offsetHeight > key.offsetHeight) {
+        arr[j].style.backgroundColor = "white";
+        stairs.insertBefore(arr[j+1], arr[j])
+        j--;
+      } else {
+        arr[j].style.backgroundColor = "white"
+        break;
+      }
     }
+    key.style.backgroundColor = "white";
     stairs.insertBefore(arr[j+1], key);
+    await timeout();
   }
 }
 
@@ -105,6 +118,10 @@ const bubbleSort = async (stairs, arr, timeout) => {
       await timeout();
     }
   }
+}
+
+const mergeSort = (stairs, arr, timeout) => {
+  return arr;
 }
 
 drawUI();
