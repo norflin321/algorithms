@@ -29,7 +29,7 @@ const insertSort = arr => {
 
 // Merge Sort
 const mergeSort = arr => {
-  const qonquer = (p1, p2) => {
+  const conquer = (p1, p2) => {
     let sorted = [];
     let i = 0;
     let j = 0;
@@ -49,7 +49,7 @@ const mergeSort = arr => {
       return arr;
     }
     let mid = Math.floor(arr.length/2);
-    return qonquer(divide(arr.slice(0, mid)), divide(arr.slice(mid)));
+    return conquer(divide(arr.slice(0, mid)), divide(arr.slice(mid)));
   }
   return divide(arr);
 }
