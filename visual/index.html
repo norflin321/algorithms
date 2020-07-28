@@ -5,6 +5,7 @@
     body {
       display: flex;
       font-family: 'Roboto', sans-serif;
+      margin: 0;
     }
     .visual {
       width: 50%;
@@ -38,13 +39,17 @@
       text-align: center;
       color: #0a0a0a;
     }
-    .buttons {
+    .buttons-wrap {
       display: flex;
       justify-content: center;
       padding-top: 20px;
       justify-content: space-around;
-      width: 240px;
       margin: auto;
+    }
+    .buttons-wrap div {
+      width: 240px;
+      display: flex;
+      justify-content: space-around;
     }
     button {
       cursor: pointer;
@@ -57,8 +62,6 @@
 </head>
 <body>
   <div class="visual">
-    <div class="stairs"></div>
-    <div class="buttons"></div>
   </div>
   <div class="code">
     <img src="bubblesort-code.png">

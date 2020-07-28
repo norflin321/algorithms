@@ -1,6 +1,3 @@
-
-
-
 // Bubble Sort
 const bubbleSort = arr => {
   for (_ in arr) {
@@ -14,9 +11,6 @@ const bubbleSort = arr => {
   }
   return arr;
 }
-
-
-
 
 // Insertion Sort
 const insertSort = arr => {
