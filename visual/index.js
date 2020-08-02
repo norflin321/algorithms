@@ -8,7 +8,7 @@ const drawUI = async () => {
     let stair = document.createElement("div");
     stair.innerText = arr[i];
     stairs.appendChild(stair);
-    let height = arr[i] * 5;
+    let height = arr[i] * 4;
     stair.style = `height: ${height}px`;
   }
 
@@ -38,6 +38,7 @@ const chooseSpeed = e => {
   for (speed of ["slow", "medium", "fast"]) {
     let button = document.createElement("button");
     button.innerText = speed;
+    button.style.width = "65px";
     button.onclick = e => runSort(e, sortName);
     e.target.parentNode.appendChild(button);
   }
@@ -64,12 +65,16 @@ const runSort = async (e, sortName) => {
   let stairs = document.getElementsByClassName("stairs")[0];
   let arr = stairs.children;
 
+  // run sorts
   if (sortName == "bubble sort") {
     await bubbleSort(stairs, arr, timeout);
   } else if (sortName == "insert sort") {
     await insertSort(stairs, arr, timeout);
   } else if (sortName == "merge sort") {
-    await mergeSort(stairs, arr, timeout);
+    let arrNew = [];
+    for (i of arr) arrNew.push(i);
+    arr = arrNew;
+    console.log(await mergeSort(stairs, arr, timeout))
   }
 }
 
@@ -121,38 +126,45 @@ const bubbleSort = async (stairs, arr, timeout) => {
 }
 
 const mergeSort = (stairs, arr, timeout) => {
-  const conquer = async (p1, p2) => {
-    await new Promise(resolve => setTimeout(resolve, 1*1000));
-    p1 = await p1;
-    p2 = await p2;
-    let sorted = [];
-    let i = 0;
-    let j = 0;
-    while(i < p1.length && j < p2.length) {
-      console.log(p1[i], p2[j]);
-      if (p1[i].offsetHeight < p2[j].offsetHeight) {
-        sorted.push(p1[i]);
-        i++;
-      } else {
-        sorted.push(p2[j]);
-        j++;
-      }
-    }
-    return [...sorted, ...p1.slice(i), ...p2.slice(j)];
-  }
-  const divide = arr => {
-    if (arr.length <= 1) {
+
+  if (arr.length == 1) {
+    return arr;
+  } else if (arr.length == 2) {
+    if (arr[0].offsetHeight > arr[1].offsetHeight) {
+      return [arr[1], arr[0]];
+    } else {
       return arr;
     }
-    let mid = Math.floor(arr.length/2);
-    return conquer(divide(arr.slice(0, mid)), divide(arr.slice(mid)));
   }
-  let newArr = [];
-  for (i of arr) {
-    newArr.push(i);
-  }
-  arr = newArr;
-  divide(arr)
-}
 
+  let mid = parseInt(arr.length/2);
+  let p1 = mergeSort(stairs, arr.slice(0, mid), timeout);
+  let p2 = mergeSort(stairs, arr.slice(mid), timeout);
+
+  let merged = [];
+
+  while(1) {
+
+    if (p1.length > 0 && p2.length > 0) {
+      console.log(p1[0], p2[0]);
+      if (p1[0].offsetHeight <= p2[0].offsetHeight) {
+        merged.push(p1[0]);
+        p1 = p1.slice(1);
+      } else {
+        merged.push(p2[0]);
+        p2 = p2.slice(1);
+      }
+    } else if (p1.length > 0) {
+      merged = merged.concat(p1);
+      p1 = [];
+    } else if (p2.length > 0) {
+      merged = merged.concat(p2);
+      p2 = [];
+    } else {
+      break;
+    }
+
+  }
+  return merged;
+}
 drawUI();
