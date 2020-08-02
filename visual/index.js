@@ -121,12 +121,15 @@ const bubbleSort = async (stairs, arr, timeout) => {
 }
 
 const mergeSort = (stairs, arr, timeout) => {
-  const conquer = (p1, p2) => {
-    console.log(p1, p2);
+  const conquer = async (p1, p2) => {
+    await new Promise(resolve => setTimeout(resolve, 1*1000));
+    p1 = await p1;
+    p2 = await p2;
     let sorted = [];
     let i = 0;
     let j = 0;
     while(i < p1.length && j < p2.length) {
+      console.log(p1[i], p2[j]);
       if (p1[i].offsetHeight < p2[j].offsetHeight) {
         sorted.push(p1[i]);
         i++;
@@ -138,7 +141,6 @@ const mergeSort = (stairs, arr, timeout) => {
     return [...sorted, ...p1.slice(i), ...p2.slice(j)];
   }
   const divide = arr => {
-    console.log('divide');
     if (arr.length <= 1) {
       return arr;
     }
@@ -150,8 +152,7 @@ const mergeSort = (stairs, arr, timeout) => {
     newArr.push(i);
   }
   arr = newArr;
-  console.log(arr);
-  console.log(divide(arr));
+  divide(arr)
 }
 
 drawUI();
