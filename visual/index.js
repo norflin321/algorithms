@@ -125,7 +125,7 @@ const bubbleSort = async (stairs, arr, timeout) => {
   }
 }
 
-const mergeSort = (stairs, arr, timeout) => {
+const mergeSort = async (stairs, arr, timeout) => {
 
   if (arr.length == 1) {
     return arr;
@@ -138,8 +138,8 @@ const mergeSort = (stairs, arr, timeout) => {
   }
 
   let mid = parseInt(arr.length/2);
-  let p1 = mergeSort(stairs, arr.slice(0, mid), timeout);
-  let p2 = mergeSort(stairs, arr.slice(mid), timeout);
+  let p1 = await mergeSort(stairs, arr.slice(0, mid), timeout);
+  let p2 = await mergeSort(stairs, arr.slice(mid), timeout);
 
   let merged = [];
 
@@ -147,11 +147,14 @@ const mergeSort = (stairs, arr, timeout) => {
 
     if (p1.length > 0 && p2.length > 0) {
       console.log(p1[0], p2[0]);
+      await timeout();
       if (p1[0].offsetHeight <= p2[0].offsetHeight) {
         merged.push(p1[0]);
+        stairs.insertBefore(p1[0], p2[0])
         p1 = p1.slice(1);
       } else {
         merged.push(p2[0]);
+        stairs.insertBefore(p2[0], p1[0])
         p2 = p2.slice(1);
       }
     } else if (p1.length > 0) {
@@ -165,6 +168,7 @@ const mergeSort = (stairs, arr, timeout) => {
     }
 
   }
+  console.log('new')
   return merged;
 }
 drawUI();
